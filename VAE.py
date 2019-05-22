@@ -26,8 +26,6 @@ class ExpConfig(spt.Config):
     # model parameters
     z_dim = 20
     h = 10
-    tot_templates = 29 # TODO: should not be hard-encoded
-    x_dim = h * tot_templates
 
     # training parameters
     result_dir = None
@@ -46,14 +44,21 @@ class ExpConfig(spt.Config):
     test_batch_size = 128
 
     # paths
-    checkpoint_dir = os.path.join(os.path.dirname(sys.modules['__main__'].__file__),
-                                  'train_z_20')
-    train_log_file = os.path.join(os.path.dirname(sys.modules['__main__'].__file__),
-                                  'log', 'log_z_20.log')
+    model_name = 'one_hot'
 
 
 config = ExpConfig()
-
+# parse the arguments
+arg_parser = ArgumentParser()
+spt.register_config_arguments(config, arg_parser, title='Model options')
+spt.register_config_arguments(spt.settings, arg_parser, prefix='tfsnippet',
+                              title='TFSnippet options')
+arg_parser.parse_args(sys.argv[1:])
+# set path configurations
+checkpoint_dir = os.path.join(os.path.dirname(sys.modules['__main__'].__file__),
+                              'train_%s' % config.model_name)
+train_log_file = os.path.join(os.path.dirname(sys.modules['__main__'].__file__),
+                              'log', '%s.log' % config.model_name)
 
 @spt.global_reuse
 @add_arg_scope
@@ -83,7 +88,7 @@ def q_net(x, observed=None, n_z=None, is_initializing=False):
 
 @spt.global_reuse
 @add_arg_scope
-def p_net(observed=None, n_z=None, is_initializing=False):
+def p_net(x_dim, observed=None, n_z=None, is_initializing=False):
     net = spt.BayesianNet(observed=observed)
     normalizer_fn = functools.partial(
         spt.layers.act_norm, initializing=is_initializing)
@@ -104,7 +109,7 @@ def p_net(observed=None, n_z=None, is_initializing=False):
         h_z = spt.layers.dense(h_z, 500)
 
     # sample x ~ p(x|z)
-    x_logits = spt.layers.dense(h_z, config.x_dim, name='x_logits')
+    x_logits = spt.layers.dense(h_z, x_dim, name='x_logits')
     x = net.add('x', spt.Bernoulli(logits=x_logits), group_ndims=1)
 
     return net
@@ -155,62 +160,10 @@ def get_result_during_test(evaluator, y, x_count, results):
     results.update_metrics({'precision': precision, 'recall': recall, 'f1_score': f1_score})
 
 
-@log_file(config.train_log_file)
+@log_file(train_log_file)
 def main():
-    # parse the arguments
-    arg_parser = ArgumentParser()
-    spt.register_config_arguments(config, arg_parser, title='Model options')
-    spt.register_config_arguments(spt.settings, arg_parser, prefix='tfsnippet',
-                                  title='TFSnippet options')
-    arg_parser.parse_args(sys.argv[1:])
-
     # print the config
     print_with_title('Configurations', pformat(config.to_dict()), after='\n')
-
-    # open the result object and prepare for result directories
-    results = MLResults(config.result_dir)
-    results.save_config(config)  # save experiment settings for review
-    results.make_dirs('plotting', exist_ok=True)
-    results.make_dirs('train_summary', exist_ok=True)
-
-    # input placeholders
-    input_x = tf.placeholder(
-        dtype=tf.int32, shape=(None, config.x_dim), name='input_x')
-    learning_rate = spt.AnnealingVariable(
-        'learning_rate', config.initial_lr, config.lr_anneal_factor)
-
-    # derive the output for initialization
-    with tf.name_scope('initialization'), \
-            spt.utils.scoped_set_config(spt.settings, auto_histogram=False):
-        init_q_net = q_net(input_x, is_initializing=True)
-        init_chain = init_q_net.chain(
-            p_net, observed={'x': input_x}, is_initializing=True)
-        init_lb = tf.reduce_mean(init_chain.vi.lower_bound.elbo())
-
-    # derive the loss and lower-bound for training
-    with tf.name_scope('training'):
-        train_q_net = q_net(input_x)
-        train_chain = train_q_net.chain(p_net, observed={'x': input_x})
-        vae_loss = tf.reduce_mean(train_chain.vi.training.sgvb())
-        loss = vae_loss + tf.losses.get_regularization_loss()
-
-    # derive the nll and logits output for testing
-    with tf.name_scope('testing'):
-        test_q_net = q_net(input_x, n_z=config.test_n_z)
-        test_chain = test_q_net.chain(
-            p_net, latent_axis=0, observed={'x': input_x})
-        test_nll = -tf.reduce_mean(test_chain.vi.evaluation.is_loglikelihood())
-        test_lb = tf.reduce_mean(test_chain.vi.lower_bound.elbo())
-        test_ll = test_chain.vi.evaluation.is_loglikelihood()
-
-    # derive the optimizer
-    with tf.name_scope('optimizing'):
-        optimizer = tf.train.AdamOptimizer(learning_rate)
-        params = tf.trainable_variables()
-        grads = optimizer.compute_gradients(loss, var_list=params)
-        with tf.control_dependencies(
-                tf.get_collection(tf.GraphKeys.UPDATE_OPS)):
-            train_op = optimizer.apply_gradients(grads)
 
     # prepare for training and testing data
     dataloader = DataLoader(os.path.join(os.path.dirname(sys.modules['__main__'].__file__),
@@ -232,6 +185,53 @@ def main():
     test_flow = one_hot_flow(
         x_test, dataloader, config.test_batch_size)
 
+    # open the result object and prepare for result directories
+    results = MLResults(config.result_dir)
+    results.save_config(config)  # save experiment settings for review
+    results.make_dirs('plotting', exist_ok=True)
+    results.make_dirs('train_summary', exist_ok=True)
+
+    # input placeholders
+    template_cnt = dataloader.template_cnt
+    x_dim = template_cnt * config.h
+    input_x = tf.placeholder(
+        dtype=tf.int32, shape=(None, x_dim), name='input_x')
+    learning_rate = spt.AnnealingVariable(
+        'learning_rate', config.initial_lr, config.lr_anneal_factor)
+
+    # derive the output for initialization
+    with tf.name_scope('initialization'), \
+            spt.utils.scoped_set_config(spt.settings, auto_histogram=False):
+        init_q_net = q_net(input_x, is_initializing=True)
+        init_chain = init_q_net.chain(
+            p_net, observed={'x': input_x}, is_initializing=True, x_dim=x_dim)
+        init_lb = tf.reduce_mean(init_chain.vi.lower_bound.elbo())
+
+    # derive the loss and lower-bound for training
+    with tf.name_scope('training'):
+        train_q_net = q_net(input_x)
+        train_chain = train_q_net.chain(p_net, observed={'x': input_x}, x_dim=x_dim)
+        vae_loss = tf.reduce_mean(train_chain.vi.training.sgvb())
+        loss = vae_loss + tf.losses.get_regularization_loss()
+
+    # derive the nll and logits output for testing
+    with tf.name_scope('testing'):
+        test_q_net = q_net(input_x, n_z=config.test_n_z)
+        test_chain = test_q_net.chain(
+            p_net, latent_axis=0, observed={'x': input_x}, x_dim=x_dim)
+        test_nll = -tf.reduce_mean(test_chain.vi.evaluation.is_loglikelihood())
+        test_lb = tf.reduce_mean(test_chain.vi.lower_bound.elbo())
+        test_ll = test_chain.vi.evaluation.is_loglikelihood()
+
+    # derive the optimizer
+    with tf.name_scope('optimizing'):
+        optimizer = tf.train.AdamOptimizer(learning_rate)
+        params = tf.trainable_variables()
+        grads = optimizer.compute_gradients(loss, var_list=params)
+        with tf.control_dependencies(
+                tf.get_collection(tf.GraphKeys.UPDATE_OPS)):
+            train_op = optimizer.apply_gradients(grads)
+
     with spt.utils.create_session().as_default() as session, \
             train_flow.threaded(5) as train_flow:
         spt.utils.ensure_variables_initialized()
@@ -250,7 +250,7 @@ def main():
                            summary_dir=(results.system_path('train_summary')
                                         if config.write_summary else None),
                            summary_graph=tf.get_default_graph(),
-                           checkpoint_dir=config.checkpoint_dir,
+                           checkpoint_dir=checkpoint_dir,
                            checkpoint_epoch_freq=1,
                            checkpoint_max_to_keep=10) as loop:
             trainer = spt.Trainer(
