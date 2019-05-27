@@ -11,5 +11,5 @@ def one_hot_flow(x, data_loader, batch_size, shuffle=False, skip_incomplete=Fals
     # compose the data flow
     source_flow = DataFlow.arrays([x], batch_size, shuffle, skip_incomplete,
                                   random_state)
-    map_flow = source_flow.map(lambda t: data_loader.one_hot_map_flow(t))
+    map_flow = source_flow.map(lambda t: [data_loader.vectors[t]])
     return map_flow

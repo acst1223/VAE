@@ -54,3 +54,6 @@ target/
 
 # figures
 *.png
+
+# deprecated files
+*.deprecated

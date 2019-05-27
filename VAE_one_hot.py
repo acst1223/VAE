@@ -60,6 +60,14 @@ checkpoint_dir = os.path.join(os.path.dirname(sys.modules['__main__'].__file__),
 train_log_file = os.path.join(os.path.dirname(sys.modules['__main__'].__file__),
                               'log', '%s.log' % config.model_name)
 
+
+def get_size_of_tuple(t):
+    r = 1
+    for i in t:
+        r *= i
+    return r
+
+
 @spt.global_reuse
 @add_arg_scope
 def q_net(x, observed=None, n_z=None, is_initializing=False):
@@ -74,13 +82,14 @@ def q_net(x, observed=None, n_z=None, is_initializing=False):
                    weight_norm=True,
                    kernel_regularizer=spt.layers.l2_regularizer(config.l2_reg)):
         h_x = tf.to_float(x)
+        h_x = tf.layers.flatten(h_x)
         h_x = spt.layers.dense(h_x, 500)
         h_x = spt.layers.dense(h_x, 500)
 
     # sample z ~ q(z|x)
     z_mean = spt.layers.dense(h_x, config.z_dim, name='z_mean')
     z_logstd = spt.layers.dense(h_x, config.z_dim, name='z_logstd')
-    z = net.add('z', spt.Normal(mean=z_mean, logstd=z_logstd), n_samples=n_z,
+    z = net.add('z', spt.Normal(mean=z_mean, logstd=tf.maximum(z_logstd, 1e-7)), n_samples=n_z,
                 group_ndims=1)
 
     return net
@@ -88,7 +97,7 @@ def q_net(x, observed=None, n_z=None, is_initializing=False):
 
 @spt.global_reuse
 @add_arg_scope
-def p_net(x_dim, observed=None, n_z=None, is_initializing=False):
+def p_net(observed=None, n_z=None, is_initializing=False, x_dim=-1):
     net = spt.BayesianNet(observed=observed)
     normalizer_fn = functools.partial(
         spt.layers.act_norm, initializing=is_initializing)
@@ -109,8 +118,9 @@ def p_net(x_dim, observed=None, n_z=None, is_initializing=False):
         h_z = spt.layers.dense(h_z, 500)
 
     # sample x ~ p(x|z)
-    x_logits = spt.layers.dense(h_z, x_dim, name='x_logits')
-    x = net.add('x', spt.Bernoulli(logits=x_logits), group_ndims=1)
+    x_logits = spt.layers.dense(h_z, get_size_of_tuple(x_dim), name='x_logits')
+    x_logits = spt.ops.reshape_tail(x_logits, ndims=1, shape=x_dim)
+    x = net.add('x', spt.OnehotCategorical(logits=x_logits), group_ndims=1)
 
     return net
 
@@ -193,9 +203,9 @@ def main():
 
     # input placeholders
     template_cnt = dataloader.template_cnt
-    x_dim = template_cnt * config.h
+    x_dim = (config.h, template_cnt)
     input_x = tf.placeholder(
-        dtype=tf.int32, shape=(None, x_dim), name='input_x')
+        dtype=tf.int32, shape=(None,) + x_dim, name='input_x')
     learning_rate = spt.AnnealingVariable(
         'learning_rate', config.initial_lr, config.lr_anneal_factor)
 
