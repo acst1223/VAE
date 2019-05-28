@@ -57,3 +57,5 @@ target/
 
 # deprecated files
 *.deprecated
+
+!requirements.txt
