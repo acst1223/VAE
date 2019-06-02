@@ -38,6 +38,7 @@ class ExpConfig(spt.Config):
     lr_anneal_factor = 0.5
     lr_anneal_epoch_freq = 300
     lr_anneal_step_freq = None
+    wipe_train_anomaly = True
 
     # evaluation parameters
     test_n_z = 500
@@ -83,8 +84,8 @@ def q_net(x, observed=None, n_z=None, is_initializing=False):
                    kernel_regularizer=spt.layers.l2_regularizer(config.l2_reg)):
         h_x = tf.to_float(x)
         h_x = tf.layers.flatten(h_x)
-        h_x = spt.layers.dense(h_x, 500)
-        h_x = spt.layers.dense(h_x, 500)
+        h_x = spt.layers.dense(h_x, 512)
+        h_x = spt.layers.dense(h_x, 512)
 
     # sample z ~ q(z|x)
     z_mean = spt.layers.dense(h_x, config.z_dim, name='z_mean')
@@ -114,8 +115,8 @@ def p_net(observed=None, n_z=None, is_initializing=False, x_dim=-1):
                    weight_norm=True,
                    kernel_regularizer=spt.layers.l2_regularizer(config.l2_reg)):
         h_z = z
-        h_z = spt.layers.dense(h_z, 500)
-        h_z = spt.layers.dense(h_z, 500)
+        h_z = spt.layers.dense(h_z, 512)
+        h_z = spt.layers.dense(h_z, 512)
 
     # sample x ~ p(x|z)
     x_logits = spt.layers.dense(h_z, get_size_of_tuple(x_dim), name='x_logits')
@@ -180,7 +181,7 @@ def main():
                                          'pipeline',
                                          'HDFS',
                                          'data_instances_full.csv'),
-                            0.3, 0.6, 10)
+                            0.3, 0.6, 10, wipe_train_anomaly=config.wipe_train_anomaly)
     (x_train, y_train), (x_test, y_test), (x_validate, y_validate) = \
         (dataloader.x_train, dataloader.y_train), \
         (dataloader.x_test, dataloader.y_test), \

@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7662f452-ed1c-476c-a827-66da60b250c7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VAE_one_hot.py" beforeDir="false" afterPath="$PROJECT_DIR$/VAE_one_hot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pipeline/vae_dataloader.py" beforeDir="false" afterPath="$PROJECT_DIR$/pipeline/vae_dataloader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/VAE_one_hot/config.defaults.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/VAE_one_hot/config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/VAE_one_hot/result.json" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,7 +18,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/VAE$test5.coverage" NAME="test5 Coverage Results" MODIFIED="1558347668827" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/VAE$VAE_one_hot.coverage" NAME="VAE_one_hot Coverage Results" MODIFIED="1558940958583" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/VAE$VAE_one_hot.coverage" NAME="VAE_one_hot Coverage Results" MODIFIED="1559205399167" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/VAE$decide_boundary.coverage" NAME="decide_boundary Coverage Results" MODIFIED="1557801058839" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/VAE$test6.coverage" NAME="test6 Coverage Results" MODIFIED="1558407445020" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/VAE$test.coverage" NAME="test Coverage Results" MODIFIED="1558325789509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -42,30 +48,33 @@
     <session id="2050234650">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="36" />
-          <entry key="project.open.time.0" value="12" />
-          <entry key="project.open.time.1" value="4" />
+          <entry key="project.closed" value="55" />
+          <entry key="project.open.time.0" value="15" />
+          <entry key="project.open.time.1" value="6" />
           <entry key="project.open.time.10" value="1" />
-          <entry key="project.open.time.11" value="3" />
-          <entry key="project.open.time.12" value="3" />
+          <entry key="project.open.time.11" value="5" />
+          <entry key="project.open.time.12" value="4" />
+          <entry key="project.open.time.13" value="2" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.15" value="1" />
+          <entry key="project.open.time.16" value="1" />
+          <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.19" value="1" />
-          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.2" value="2" />
           <entry key="project.open.time.3" value="1" />
-          <entry key="project.open.time.4" value="7" />
+          <entry key="project.open.time.4" value="12" />
           <entry key="project.open.time.47" value="1" />
-          <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="37" />
+          <entry key="project.open.time.5" value="2" />
+          <entry key="project.opened" value="56" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="csv" value="1" />
           <entry key="json" value="7" />
-          <entry key="log" value="55" />
+          <entry key="log" value="77" />
           <entry key="png" value="7" />
-          <entry key="py" value="161" />
+          <entry key="py" value="162" />
           <entry key="pyi" value="1" />
           <entry key="txt" value="8" />
         </counts>
@@ -74,63 +83,39 @@
         <counts>
           <entry key="Image" value="7" />
           <entry key="JSON" value="7" />
-          <entry key="PLAIN_TEXT" value="64" />
-          <entry key="Python" value="161" />
+          <entry key="Log" value="15" />
+          <entry key="PLAIN_TEXT" value="71" />
+          <entry key="Python" value="162" />
           <entry key="PythonStub" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="1748" />
-          <entry key="py" value="13845" />
+          <entry key="py" value="14082" />
           <entry key="txt" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Python" value="15593" />
+          <entry key="Python" value="15830" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/VAE_one_hot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="178" column="49" lean-forward="true" selection-start-line="178" selection-start-column="49" selection-end-line="178" selection-end-column="49" />
+            <state relative-caret-position="221">
+              <caret line="156" column="27" lean-forward="true" selection-start-line="156" selection-start-column="27" selection-end-line="156" selection-end-column="27" />
               <folding>
                 <element signature="e#24#40#0" expanded="true" />
-                <marker date="1558946173449" expanded="true" signature="1788:1845" ph="..." />
+                <marker date="1559205572079" expanded="true" signature="1818:1875" ph="..." />
               </folding>
             </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="true" current-in-tab="true">
-        <entry file="remoteDeploymentFS://&lt;eb4cf263-5402-483b-98b2-0fc71d30eeef&gt;/VAE/VAE_one_hot.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="228" column="48" selection-start-line="228" selection-start-column="48" selection-end-line="228" selection-end-column="48" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="true" current-in-tab="false">
-        <entry file="remoteDeploymentFS://&lt;eb4cf263-5402-483b-98b2-0fc71d30eeef&gt;/VAE/log/one_hot_categorical_z_5.log">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
-              <caret line="61" column="78" lean-forward="true" selection-start-line="61" selection-start-column="78" selection-end-line="61" selection-end-column="78" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="true" current-in-tab="false">
-        <entry file="remoteDeploymentFS://&lt;eb4cf263-5402-483b-98b2-0fc71d30eeef&gt;/VAE/log/one_hot_categorical_z_20.log">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1575" />
           </provider>
         </entry>
       </file>
@@ -158,11 +143,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pipeline/vae_dataloader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2562">
-              <caret line="125" column="35" selection-start-line="125" selection-start-column="16" selection-end-line="125" selection-end-column="35" />
+            <state relative-caret-position="1407">
+              <caret line="70" column="33" selection-start-line="70" selection-start-column="33" selection-end-line="70" selection-end-column="33" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <marker date="1558425492217" expanded="true" signature="5252:5337" ph="..." />
+                <marker date="1559215873467" expanded="true" signature="5283:5368" ph="..." />
               </folding>
             </state>
           </provider>
@@ -274,11 +259,11 @@
         <option value="$PROJECT_DIR$/tests/test5.py" />
         <option value="$PROJECT_DIR$/tests/test4.py" />
         <option value="$PROJECT_DIR$/tests/test6.py" />
-        <option value="$PROJECT_DIR$/pipeline/vae_dataloader.py" />
         <option value="&lt;eb4cf263-5402-483b-98b2-0fc71d30eeef&gt;/VAE/log/log_z_5.log" />
         <option value="$PROJECT_DIR$/utils/one_hot_flow.py" />
         <option value="$PROJECT_DIR$/VAE.py" />
         <option value="$PROJECT_DIR$/VAE_one_hot.py" />
+        <option value="$PROJECT_DIR$/pipeline/vae_dataloader.py" />
       </list>
     </option>
   </component>
@@ -337,6 +322,12 @@
             <path>
               <item name="VAE" type="b2602c69:ProjectViewProjectNode" />
               <item name="VAE" type="462c0819:PsiDirectoryNode" />
+              <item name="results" type="462c0819:PsiDirectoryNode" />
+              <item name="VAE_one_hot" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="VAE" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VAE" type="462c0819:PsiDirectoryNode" />
               <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -358,7 +349,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../zhusuan-master" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../data/baidu_openDataset" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -417,7 +408,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/VAE_one_hot.py" />
-      <option name="PARAMETERS" value="" />
+      <option name="PARAMETERS" value="--wipe_train_anomaly False" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -532,9 +523,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15938166" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19189766" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -606,13 +596,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://D:/Python/Python36/Lib/site-packages/tfsnippet/distributions/univariate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1470">
-          <caret line="74" column="8" selection-start-line="74" selection-start-column="8" selection-end-line="74" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/Python/Python36/Lib/site-packages/tfsnippet/trainer/feed_dict.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -832,13 +815,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/log/one_hot.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7363">
-          <caret line="778" column="93" selection-start-line="778" selection-start-column="93" selection-end-line="778" selection-end-column="93" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/log/VAE.log">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -847,6 +823,37 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5859">
           <caret line="287" column="4" selection-start-line="287" selection-start-column="4" selection-end-line="287" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor>
+            <markdownNavigatorState />
+          </second_editor>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log/one_hot.log">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="-7363">
+          <caret line="778" column="93" selection-start-line="778" selection-start-column="93" selection-end-line="778" selection-end-column="93" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="LogFileEditorProvider">
+        <state relative-caret-position="-1014" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VAE_one_hot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="156" column="27" lean-forward="true" selection-start-line="156" selection-start-column="27" selection-end-line="156" selection-end-column="27" />
+          <folding>
+            <element signature="e#24#40#0" expanded="true" />
+            <marker date="1559205572079" expanded="true" signature="1818:1875" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -869,11 +876,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pipeline/vae_dataloader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2562">
-          <caret line="125" column="35" selection-start-line="125" selection-start-column="16" selection-end-line="125" selection-end-column="35" />
+        <state relative-caret-position="1407">
+          <caret line="70" column="33" selection-start-line="70" selection-start-column="33" selection-end-line="70" selection-end-column="33" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <marker date="1558425492217" expanded="true" signature="5252:5337" ph="..." />
+            <marker date="1559215873467" expanded="true" signature="5283:5368" ph="..." />
           </folding>
         </state>
       </provider>
@@ -900,17 +907,6 @@
           <caret line="18" column="56" selection-start-line="18" selection-end-line="18" selection-end-column="56" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VAE_one_hot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="178" column="49" lean-forward="true" selection-start-line="178" selection-start-column="49" selection-end-line="178" selection-end-column="49" />
-          <folding>
-            <element signature="e#24#40#0" expanded="true" />
-            <marker date="1558946173449" expanded="true" signature="1788:1845" ph="..." />
           </folding>
         </state>
       </provider>

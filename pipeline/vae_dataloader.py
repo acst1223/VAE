@@ -64,9 +64,9 @@ def _split_data(x_data, y_data=None, train_ratio=0, split_type='uniform', test_r
 
 
 class DataLoader(object):
-    def __init__(self, data_instance_file, train_ratio, test_ratio, h):
+    def __init__(self, data_instance_file, train_ratio, test_ratio, h, wipe_train_anomaly=True):
         self.h = h
-        pad_to = self.h + 2     # if length of event sequence is less than this value, pad to this value
+        pad_to = self.h     # if length of event sequence is less than this value, pad to this value
 
         # parse data instance file
         data_df = pd.read_csv(data_instance_file)
@@ -79,11 +79,10 @@ class DataLoader(object):
                                                        train_ratio,
                                                        test_ratio=test_ratio)
 
-        # throw away anomalies in x_train_raw
         x_temp = x_train_raw
         x_train_raw = []
         for i, y in enumerate(self.y_train):
-            if y == 0:
+            if (y == 0 or not wipe_train_anomaly) and len(x_temp[i]) >= h - 2:
                 x_train_raw.append(x_temp[i])
 
         # pad
